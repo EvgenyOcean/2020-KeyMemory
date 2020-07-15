@@ -60,7 +60,7 @@ class App extends React.Component{
           {name: 'space', type: 'space', shown: false, finger: 'thumb'},
         ]
       ], 
-      active: {},
+      active: {name: 'ь', type: 'key', shown: false, finger: 'rindex'},
       gameOn: false,
       totalAnswers: 0, 
       correctAnswers: 0,
