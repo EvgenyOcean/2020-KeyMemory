@@ -86,14 +86,13 @@ class App extends React.Component{
   }
 
   handleKeyClick(key, e){
-    console.log(key);
     let active = this.state.active;
     if (key === active){
       this.setState(prevState => {
         return {totalAnswers: prevState.totalAnswers + 1, correctAnswers: prevState.correctAnswers + 1}
       }, () => {this.generateNewActive();})
     } else {
-      this.setState(prevState => ({wrongAnswers: prevState.wrongAnswers + 1}))
+      this.setState(prevState => ({wrongAnswers: prevState.wrongAnswers + 1, totalAnswers: prevState.totalAnswers + 1}))
     }
   }
 
