@@ -9,7 +9,7 @@ class Display extends Component {
     return (
       <DisplayDiv>
         <div className="task">
-          {gameOn ? <h1 className='title'>На каком месте находиться клавиша:</h1> : <h1 className='title'>Нажмите Start для начала</h1>}
+          {gameOn ? <h1 className='title'>На каком месте находится клавиша:</h1> : <h1 className='title'>Нажмите Start для начала</h1>}
           <div className="current-key">
             <img src="/imgs/wolf.svg" alt="wolf"/>
               {gameOn ? <h1 className="active-key">{active.name}</h1> : <button className="start-btn" onClick={handleStart}><h3>Start</h3></button>}
