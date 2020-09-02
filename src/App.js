@@ -25,10 +25,10 @@ class App extends React.Component{
           {name: 'з', type: 'key', shown: false, finger: 'pinky'},
           {name: 'х', type: 'key', shown: false, finger: 'pinky'},
           {name: 'ъ', type: 'key', shown: false, finger: 'pinky'},
-          {name: 'slash', type: 'key', shown: false, finger: 'pinky'},
+          {name: '/', type: 'key', shown: false, finger: 'pinky'},
         ], 
         [
-          {name: 'caps', type: 'caps', shown: false, finger: 'pinky'},
+          {name: 'CapsLock', type: 'caps', shown: false, finger: 'pinky'},
           {name: 'ф', type: 'key', shown: false, finger: 'pinky'},
           {name: 'ы', type: 'key', shown: false, finger: 'ring'},
           {name: 'в', type: 'key', shown: false, finger: 'middle'},
@@ -40,10 +40,10 @@ class App extends React.Component{
           {name: 'д', type: 'key', shown: false, finger: 'ring'},
           {name: 'ж', type: 'key', shown: false, finger: 'pinky'},
           {name: 'э', type: 'key', shown: false, finger: 'pinky'},
-          {name: 'enter', type: 'enter', shown: false, finger: 'pinky'},
+          {name: 'Enter', type: 'enter', shown: false, finger: 'pinky'},
         ], 
         [
-          {name: 'lshift', type: 'shift', shown: false, finger: 'pinky'},
+          {name: 'Left Shift', type: 'shift', shown: false, finger: 'pinky'},
           {name: 'я', type: 'key', shown: false, finger: 'pinky'},
           {name: 'ч', type: 'key', shown: false, finger: 'ring'},
           {name: 'с', type: 'key', shown: false, finger: 'middle'},
@@ -53,8 +53,8 @@ class App extends React.Component{
           {name: 'ь', type: 'key', shown: false, finger: 'rindex'},
           {name: 'б', type: 'key', shown: false, finger: 'middle'},
           {name: 'ю', type: 'key', shown: false, finger: 'ring'},
-          {name: 'dot', type: 'key', shown: false, finger: 'pinky'},
-          {name: 'rshift', type: 'shift', shown: false, finger: 'pinky'},
+          {name: '.', type: 'key', shown: false, finger: 'pinky'},
+          {name: 'Right Shift', type: 'shift', shown: false, finger: 'pinky'},
         ], 
         [
           {name: 'space', type: 'space', shown: false, finger: 'thumb'},
@@ -67,22 +67,41 @@ class App extends React.Component{
       wrongAnswers: 0
     };
     this.handleKeyClick = this.handleKeyClick.bind(this);
+    this.handleStart = this.handleStart.bind(this);
+    this.generateNewActive = this.generateNewActive.bind(this);
   }
 
-  // generateNewActive(){}
+  generateNewActive(){
+    // this.state.rows[this.state.rows.length][]
+    let rows = this.state.rows;
+    let rowIndex = Math.floor(Math.random()*4);
+    let keyIndex = Math.floor(Math.random()*rows[rowIndex].length);
+    this.setState({active: rows[rowIndex][keyIndex]});
+  }
 
-  // handleStart(){}
+  handleStart(){
+    this.setState({gameOn: true}, () => {
+      this.generateNewActive();
+    })
+  }
 
   handleKeyClick(key, e){
-    console.log('Key was clicked!');
-    console.log(key, e);
+    console.log(key);
+    let active = this.state.active;
+    if (key === active){
+      this.setState(prevState => {
+        return {totalAnswers: prevState.totalAnswers + 1, correctAnswers: prevState.correctAnswers + 1}
+      }, () => {this.generateNewActive();})
+    } else {
+      this.setState(prevState => ({wrongAnswers: prevState.wrongAnswers + 1}))
+    }
   }
 
   render(){
     return (
       <AppMain className="App">
         <div className="container">
-          <Display info={this.state}/>
+          <Display info={{...this.state, handleStart: this.handleStart}}/>
           <Keyboard info={{...this.state, handleKeyClick:this.handleKeyClick}}/>
         </div>
       </AppMain>

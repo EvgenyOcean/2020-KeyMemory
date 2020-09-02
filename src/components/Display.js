@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 class Display extends Component {
   render() {
-    let {active, gameOn} = this.props.info.active.name;
+    let {active, gameOn, handleStart, totalAnswers, correctAnswers, wrongAnswers} = this.props.info;
     // let conditionalClass = gameOn ? 'gameOn' : 'gameOff';
     // let finalClasses = ['stats', conditionalClass].join(' ');
     return (
@@ -12,15 +12,15 @@ class Display extends Component {
           {gameOn ? <h1 className='title'>На каком месте находиться клавиша:</h1> : <h1 className='title'>Нажмите Start для начала</h1>}
           <div className="current-key">
             <img src="/imgs/wolf.svg" alt="wolf"/>
-              {gameOn ? <h1 className="active-key">{active}</h1> : <button className="start-btn"><h3>Start</h3></button>}
+              {gameOn ? <h1 className="active-key">{active.name}</h1> : <button className="start-btn" onClick={handleStart}><h3>Start</h3></button>}
             <img src="/imgs/wolf.svg" alt="wolf"/>
           </div>
         </div>
         <div className="line"></div>
         <div className='stats'>
-          <h3>Показно клавиш:  7</h3>
-          <h3 className={gameOn && 'gameOn-left'}>Верных ответов: 5</h3>
-          <h3 className={gameOn && 'gameOn-right'}>Ошибок : 0</h3>
+          <h3>Всего ответов: {totalAnswers}</h3>
+          <h3 className={gameOn ? 'gameOn-left' : 'gameOff'}>Верных ответов: {correctAnswers}</h3>
+          <h3 className={gameOn ? 'gameOn-right' : 'gameOff'}>Ошибочных ответов : {wrongAnswers}</h3>
         </div>
       </DisplayDiv>
     );
@@ -40,6 +40,12 @@ const DisplayDiv = styled.div`
   h1{
     margin: 0;
     margin-bottom: 34px;
+  }
+
+  .active-key{
+    margin-bottom: 0;
+    text-align: center; 
+    text-transform: uppercase;
   }
 
   .task{

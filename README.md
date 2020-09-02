@@ -1,1 +1,1 @@
-Remembering key positions on the keyboard
+Remembering keys positions on the keyboard
